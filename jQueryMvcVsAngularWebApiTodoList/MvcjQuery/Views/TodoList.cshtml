@@ -1,0 +1,149 @@
+﻿@model jQueryMvcVsAngularWebApiTodoList.Models.TodoList
+<div>
+    @using (Ajax.BeginForm("Edit", "TodoLists", new AjaxOptions{OnComplete = "TodoListAjaxOnComplete"}))
+    {
+        @Html.ValidationSummary(false)
+
+        @Html.HiddenFor(x => x.Id)
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.OwnerFirstName)
+                    @Html.TextBoxFor(m => m.OwnerFirstName, null, new { @class = "form-control"})
+                </div>
+                  
+                <div class="form-group">
+                    @Html.LabelFor(m => m.OwnerLastName)
+                    @Html.TextBoxFor(m => m.OwnerLastName, null, new { @class = "form-control"})
+                </div>
+            </div>
+        </div>
+
+        var priorities = new List<SelectListItem>();
+        for (int i = 1; i < 11; i++)
+        {
+            priorities.Add(new SelectListItem
+                {
+                    Text = i.ToString(),
+                    Value = i.ToString()
+                });
+        }
+                    
+                    
+        <div class="row">
+            <table class="table grid" id="grid">
+                <thead>
+                    <tr>
+                        <th>Complete</th>
+                        <th>Name</th>
+                        <th>Priority</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (var i = 0; i < Model.Items.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.CheckBoxFor(model => model.Items[i].IsCompleted)
+                                @Html.ValidationMessageFor(model => model.Items[i].IsCompleted)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(model => model.Items[i].Task)
+                                @Html.ValidationMessageFor(model => model.Items[i].Task)
+                            </td>
+                            <td>
+                                @*
+                                            Setting select list value in for loop doesn't work (though this style is required by model binder)
+                                            http://stackoverflow.com/questions/2631397/dropdownlistfor-does-not-select-value-if-in-for-loop
+                                            Select the item in each iteration manually
+                                            *@
+                                            
+                                @{
+                                    foreach (var selectListItem in priorities)
+                                    {
+                                        selectListItem.Selected = false;
+                                    }
+                                                
+                                    var toSelect = priorities.FirstOrDefault(x => x.Value == Model.Items[i].Priority.ToString());
+                                    if (toSelect != null)
+                                    {
+                                        toSelect.Selected = true;
+                                    }
+                                }
+
+                                @Html.DropDownListFor(model => model.Items[i].Priority, priorities)
+                                @Html.ValidationMessageFor(model => model.Items[i].Priority)
+                            </td>
+                            <td>
+                                <button class="btn btn-danger delete-todo">
+                                    <span class="glyphicon glyphicon-remove-sign"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        //this is a maintenance problem because it duplicates the above code. it needs to be regenerated if the above changes
+        //perhaps there is a better solution...
+        <script type="text" id="item-template"> 
+                        <tr>
+                            <td>
+                                <input data-val="true" data-val-required="The IsCompleted field is required." id="Items_###__IsCompleted" name="Items[###].IsCompleted" type="checkbox" value="false" >
+                                <input name="Items[###].IsCompleted" type="hidden" value="false">
+                                <span class="field-validation-valid" data-valmsg-for="Items[###].IsCompleted" data-valmsg-replace="true"></span>
+                            </td>
+                            <td>
+                                <input data-val="true" data-val-required="The Task field is required." id="Items_###__Task" name="Items[###].Task" type="text" >
+                                <span class="field-validation-valid" data-valmsg-for="Items[###].Task" data-valmsg-replace="true"></span>
+                            </td>
+                            <td>
+                                <select data-val="true"
+                                        data-val-number="The field Priority must be a number." 
+                                        data-val-range="The field Priority must be between 1 and 10." 
+                                        data-val-range-max="10" 
+                                        data-val-range-min="1" 
+                                        data-val-required="The Priority field is required." 
+                                        id="Items_###__Priority" name="Items[###].Priority">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                                <span class="field-validation-valid" data-valmsg-for="Items[###].Priority" data-valmsg-replace="true"></span>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger delete-todo">
+                                    <span class="glyphicon glyphicon-remove-sign"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </script>
+                
+        <div class="row">
+            
+            <a id="cancel" class="btn btn-warning pull-left" href="#">
+                Cancel
+            </a>
+            <button type="submit" class="btn btn-primary pull-left">
+                Save
+            </button>
+            <button id="addTodo" class="btn btn-success pull-left">
+                Add Todo
+            </button>
+        </div>
+    }
+</div>
+<script src="~/MvcjQuery/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/MvcjQuery/Scripts/jquery.validate.min.js"></script>
+<script src="~/MvcjQuery/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/MvcjQuery/Scripts/edit.js"></script>

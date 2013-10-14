@@ -1,0 +1,23 @@
+﻿.field-validation-error, .validation-summary-errors {
+    color: red;
+    font-weight: bold;
+    display: block
+}
+
+table.grid {
+    width: 500px;
+}
+
+.panel {
+    float: left;        
+}
+
+.panel+.panel {
+    border-left: 1px solid lightgray;
+    margin-left: 10px;
+    padding-left: 20px;
+}
+
+.btn+.btn {
+    margin-left: 10px;
+}

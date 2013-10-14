@@ -1,0 +1,30 @@
+﻿<div class="panel">
+    <table class="table grid">
+        <thead>
+            <tr>
+                <th>Owner First Name</th>
+                <th>Owner Last Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="list in todoLists">
+                <td>{{list.OwnerFirstName}}</td>
+                <td>{{list.OwnerLastName}}</td>
+                <td>
+                    <a class="btn btn-default" ui-sref="todoLists.detail({ id: '{{list.Id}}' })">Edit</a>
+                    <button class="btn btn-danger" ng-click="delete(list, $index)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            <tr ng-show="todos.length > 0">
+                <td>
+                    No items yet
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-success" ui-sref="todoLists.detail({ id: 'new' })">Add</a>
+</div>
+<div class="panel" ui-view=""></div>

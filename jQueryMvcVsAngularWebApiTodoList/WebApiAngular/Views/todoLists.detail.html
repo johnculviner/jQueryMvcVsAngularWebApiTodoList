@@ -1,0 +1,62 @@
+﻿<div ng-form="todoDetailForm">
+    <div class="row">
+        <div ng-repeat="error in errors" class="validation-summary-errors">{{error}}</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label>Owner First Name</label>
+                <input type="text" class="form-control" ng-model="todoList.OwnerFirstName" required="" />
+            </div>
+                    
+            <div class="form-group">
+                <label>Owner Last Name</label>
+                <input type="text" class="form-control" ng-model="todoList.OwnerLastName" required="" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table grid" id="grid">
+            <thead>
+                <tr>
+                    <th>Complete</th>
+                    <th>Name</th>
+                    <th>Priority</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="todo in todoList.Items">
+                    <td>
+                        <input type="checkbox" ng-model="todo.IsCompleted"/>
+                    </td>
+                    <td>
+                        <input type="text" ng-model="todo.Task" required="" />
+                    </td>
+                    <td>
+                        <select ng-model="todo.Priority" required="">
+                            <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" ng-click="todoList.Items.splice($index, 1)">
+                            <span class="glyphicon glyphicon-remove-sign"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row">
+        <a id="cancel" class="btn btn-warning pull-left" href="#">
+            Cancel
+        </a>
+        <button ng-disabled="todoDetailForm.$invalid" type="submit" ng-click="save()" class="btn btn-primary pull-left">
+            Save
+        </button>
+        <button id="addTodo" class="btn btn-success pull-left" ng-click="todoList.Items.push({})">
+            Add Todo
+        </button>
+    </div>
+</div>
