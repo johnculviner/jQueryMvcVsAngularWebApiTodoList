@@ -77,4 +77,3 @@ _ReSharper.*
 *.vsp
 *.psess
 packages/*
-jQueryMvcVsAngularWebApiTodoList/Raven/*
