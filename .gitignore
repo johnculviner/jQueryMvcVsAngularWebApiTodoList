@@ -26,7 +26,6 @@ Generated_Code
 *.com
 *.class
 # *.dll
-*.exe
 *.o
 *.so
  
