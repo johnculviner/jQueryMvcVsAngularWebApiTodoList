@@ -8,7 +8,7 @@
     });
     
     function checkHash() {
-        //some nasty hash string parsing to determine whether to show a detail panel
+        //some nasty hash string parsing to determine whether to show a detail panel. not extendable for a site getting bigger
         var token = "#";
         var hashIdx = window.location.hash.indexOf(token);
         var $detailContainer = $('#detail');

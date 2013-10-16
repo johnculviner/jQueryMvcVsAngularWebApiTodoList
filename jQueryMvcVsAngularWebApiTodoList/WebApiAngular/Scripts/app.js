@@ -18,7 +18,7 @@
     })
 
     .factory('TodoList', function ($resource) {
-        //provides easy interaction with a RESTful endpoint
+        //resource provides easy interaction with a RESTful endpoint. DI'ed into controllers below
         return new $resource('/api/TodoApi/:id');
     })
 
@@ -31,6 +31,10 @@
                 $scope.todoLists.splice(index, 1);
             });
         };
+
+        $scope.$on('todoChanged', function() { //could get crazy here and ONLY replace the item that changed, but not doing for brevity
+            $scope.todoLists = TodoList.query();
+        });
     })
 
     .controller('todoDetail', function ($scope, TodoList, $stateParams, $state) {
@@ -42,6 +46,7 @@
             $scope.todoList.$save(function () {
                 $scope.errors = null;
                 $state.go('^');
+                $scope.$emit('todoChanged');
             }, function(resp) {
                 $scope.errors = resp.data;
             });

@@ -69,6 +69,6 @@ function TodoListAjaxOnComplete(resp) {
         $('#detail').html(resp.responseText); //validation errors
     } else {
         window.location.hash = "";
-        window.location.reload();
+        window.location.reload(); //full refresh is less than ideal
     }
 }
