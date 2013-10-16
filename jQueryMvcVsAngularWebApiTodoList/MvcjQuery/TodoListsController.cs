@@ -17,9 +17,11 @@ namespace jQueryMvcVsAngularWebApiTodoList.MvcjQuery
             _todoListService = new TodoListService();
         }
 
-        [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(string idToDelete = null)
         {
+            if (idToDelete != null)
+                _todoListService.Delete(idToDelete);
+
             return View(_todoListService.GetAll());
         }
 
@@ -33,13 +35,6 @@ namespace jQueryMvcVsAngularWebApiTodoList.MvcjQuery
         public ActionResult Edit(string id)
         {
             return PartialView("TodoList", _todoListService.Get(id));
-        }
-
-        [HttpPost]
-        public EmptyResult Delete(string id)
-        {
-            _todoListService.Delete(id);
-            return new EmptyResult();
         }
 
         [HttpPost]

@@ -11,6 +11,7 @@
         <div class="container">
             <h1>Todo List - jQuery and ASP.NET MVC</h1>
             <div class="panel">
+
                 <table class="table grid">
                     <thead>
                         <tr>
@@ -27,9 +28,13 @@
                                 <td>@listSummary.OwnerLastName</td>
                                 <td>
                                     <a class="btn btn-default" href="#@Url.Action("Edit", new { id = listSummary.Id })">Edit</a>
-                                    <button class="btn btn-danger" delete-item-id="@listSummary.Id">
-                                        Delete
-                                    </button>
+                                    
+                                    @using (Html.BeginForm(null, null, FormMethod.Post, new { style = "display: inline;"}))
+                                    {
+                                        <button class="btn btn-danger" type="submit" name="idToDelete" value="@listSummary.Id">
+                                            Delete
+                                        </button>
+                                    }
                                 </td>
                             </tr>
                         }
@@ -43,6 +48,7 @@
                         }
                     </tbody>
                 </table>
+
                 <a class="btn btn-success" href="#@Url.Action("Add")">Add</a>
             </div>
             <div class="panel" id="detail">

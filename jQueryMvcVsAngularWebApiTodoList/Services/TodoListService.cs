@@ -62,7 +62,8 @@ namespace jQueryMvcVsAngularWebApiTodoList.Services
             using (var session = _documentStore.OpenSession())
             {
                 return session.Query<TodoList>()
-                       .Select(x => new TodoListSummaryViewModel
+                        .Customize(x => x.WaitForNonStaleResultsAsOfLastWrite())
+                        .Select(x => new TodoListSummaryViewModel
                            {
                                Id = x.Id,
                                OwnerFirstName = x.OwnerFirstName,

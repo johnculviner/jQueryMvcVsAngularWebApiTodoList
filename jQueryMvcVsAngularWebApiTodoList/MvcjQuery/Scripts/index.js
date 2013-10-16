@@ -20,10 +20,4 @@
             $detailContainer.html('');
         }
     }
-
-    $('[delete-item-id]').on('click', function() {
-        var $ele = $(this);
-        $.post('/MvcjQuery/TodoLists/Delete/' + $ele.attr('delete-item-id'));
-        window.location.reload();
-    });
 });
