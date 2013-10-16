@@ -58,6 +58,25 @@
 
         return false; //block click handler bubble
     });
+
+    //hope this stuff doesn't conflict in the future with something of the same name!
+    var $ownerFirstName = $('[name="OwnerFirstName"]');
+    $ownerFirstName.keyup(changeNameInHeader);
+    var $ownerLastName = $('[name="OwnerLastName"]');
+    $ownerLastName.keyup(changeNameInHeader);
+    var $headerName = $('#headerName');
+
+    changeNameInHeader(); //run initially
+
+    //calc new header name
+    function changeNameInHeader() {
+        $headerName.html('Todo list for ' + $ownerFirstName.val() + ' ' + $ownerLastName.val());
+    }
+
+    //to allow for instanenous display of changes to name in the header
+    $('.name-component').keyup(function () {
+        //hope this doesn't conflict with another field in the GUI some day...!
+    });
 });
 
 //global function required for MVC ajax, not ideal and could conflict with other things in a large application
