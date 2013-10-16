@@ -1,5 +1,4 @@
-#jQuery + ASP.NET MVC vs Angular.js + WebAPI
-##Todo List Demo
+#jQuery + ASP.NET MVC vs Angular.js + WebAPI Todo List Demo
 
 ##Live Demo
 Of this exact source here: http://jQueryMVCvsAngularWebAPITodoList.apphb.com/
